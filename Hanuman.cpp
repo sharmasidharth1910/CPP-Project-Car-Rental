@@ -27,6 +27,7 @@ public:
     }
     // variables defined in this class in public mode.
 };
+
 class SignUp : public customer
 {
 public:
@@ -280,17 +281,19 @@ public:
 
                 if (st1 == customername)
                 {
-                    cout << st1 << " ";
+                    cout << endl;
+                    cout << "User Name : " << st1 << endl;
                     in >> st1;
-                    cout << st1 << " ";
+                    cout << "Booking Date : " << st1 << endl;
                     in >> st1;
-                    cout << st1 << " ";
+                    cout << "Number Of Cars : " << st1 << endl;
                     in >> st1;
-                    cout << st1 << endl;
+                    cout << "Type Of Car : " << st1 << endl;
+                    cout << endl
+                         << "------------------------------------------" << endl;
                 }
                 else
                 {
-
                     in >> st1;
                     in >> st1;
                     in >> st1;
@@ -354,7 +357,7 @@ public:
         {
             if (bm >= cm || (bm < cm && by > cy) && bm <= 12)
             {
-                if (bd > cd && bd <= 31)
+                if ((bd > cd || (bd <= cd && (bm > cm || by > cy))) && (bd <= 30))
                 {
                     return true;
                 }
