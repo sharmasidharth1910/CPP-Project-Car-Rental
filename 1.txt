@@ -1,0 +1,6 @@
+Specifications:
+
+35 kWh and 45 kWh
+Range					EPA: 120 mi 224 km	EPA: 200 mi 300 km 	
+Max. power, motor			382 hp 285 kW		382 hp 285 kW
+Max. power, battery		235 hp 175 kW		302 hp 225 kW
