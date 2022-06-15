@@ -257,7 +257,7 @@ public:
         ofstream bout;
         string str;
         string s;
-        cout << "Enter code";
+        cout << "Enter code :";
         cin >> s;
         bin.open("book.txt");
         bout.open("b_temp.txt");
@@ -757,7 +757,7 @@ public:
         cout << "\t\t	| Total Rental Amount is :"
              << "-------|" << setw(10) << rentalfee << " |" << endl;
         cout << "\t\t	 ________________________________________________________" << endl;
-        cout << "\t\t	 # This is a computer generated invoce and it does not" << endl;
+        cout << "\t\t	 # This is a computer generated invoice and it does not" << endl;
         cout << "\t\t	 require an authorised signture #" << endl;
         cout << " " << endl;
         cout << "\t\t	///////////////////////////////////////////////////////////" << endl;
@@ -876,7 +876,7 @@ validChoice:
         string st4;
         file.open("Book.txt");
         cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
-        cout << "Transaction_ID \t\t\t  Customer Name  \t\t Date \t\t\t  No. of cars \t\t Car Model\n " << endl;
+        cout << "Transaction_ID \t\t\t  Customer Name  \t\tDate\t\t\t No. of cars \t\t Car Model\n " << endl;
         cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
         while (file >> st4)
         {
@@ -893,7 +893,20 @@ validChoice:
         }
         file.close();
         cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
-        cout << "Do you want to continue (Y/N) :";
+        cout << "-------------------------------------------------------------------------------------------------------------------------" <<endl;
+        cout << " Do you want to Delete Booking (Y/N) :";
+       
+        char sh;
+        cin>>sh;
+        if(sh=='Y'||sh=='y')
+        {
+            system("CLS");
+            cout << "Use Transaction_ID of user ";
+            obj4.delBook();
+            cout<<"\nData has been deleted "<<endl;
+        }
+        
+        cout << " Do you want to continue (Y/N) :";
         char ch;
         cin >> ch;
         if (ch == 'Y' ||ch== 'y')
