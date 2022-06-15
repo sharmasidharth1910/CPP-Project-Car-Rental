@@ -244,16 +244,56 @@ public:
     int days;
     int rentalfee;
     string date;
+    string code;
 
     rent(string st)
     {
         customername = st;
+    }
+    void delBook()
+    {
+        int ctr = 0;
+        ifstream bin;
+        ofstream bout;
+        string str;
+        string s;
+        cout << "Enter code";
+        cin >> s;
+        bin.open("book.txt");
+        bout.open("b_temp.txt");
+        while (bin >> str)
+        {
+            if (str == s)
+            {
+                bin >> str;
+                bin >> str;
+                bin >> str;
+                bin >> str;
+            }
+            else
+            {
+                bout << str << " ";
+                ++ctr;
+                if (ctr % 5 == 0)
+                {
+                    bout << endl;
+                }
+            }
+        }
+        bin.close();
+        bout.close();
+        char filename1[] = "book.txt";
+        remove(filename1);
+        rename("b_temp.txt", "book.txt");
+        // cout<<"after while";
+        // sleep(3);
     }
 
     void decide()
     {
         int ch;
         bool checkBookingAvailable = false;
+
     begin:
         system("CLS");
         cout << "\n\t\t\t\t\t\t\t 1.Book Your Car " << endl;
@@ -263,7 +303,7 @@ public:
         cout << "Enter your choice :" << endl;
 
         cin >> ch;
-        string st1;
+        string st1, code_disp;
         ifstream in;
 
         switch (ch)
@@ -280,10 +320,13 @@ public:
 
             while (in >> st1)
             {
+                code_disp = st1;
+                in >> st1;
                 if (st1 == customername)
                 {
                     checkBookingAvailable = true;
                     cout << endl;
+                    cout << "your transaction code is : " << code_disp << endl;
                     cout << "User Name : " << st1 << endl;
                     in >> st1;
                     cout << "Booking Date : " << st1 << endl;
@@ -308,10 +351,15 @@ public:
                      << endl;
 
             system("PAUSE");
+            in.close();
             goto begin;
             break;
 
-            // case 3 :    break;
+        case 3:
+            delBook();
+            goto begin;
+
+            break;
 
         case 4:
             cout << "Thanks for visiting";
@@ -656,9 +704,9 @@ public:
         string temp = to_string(d1) + "/" + to_string(m1) + "/" + to_string(y1);
         date = temp;
         ofstream out;
-
+        code = RandomString(10);
         out.open("book.txt", ios ::app);
-        out << customername << " " << date << " " << days << " " << carmodel1 << "\n";
+        out << code << " " << customername << " " << date << " " << days << " " << carmodel1 << "\n";
         out.close();
     }
 
@@ -684,7 +732,7 @@ public:
         cout << "\n\t\t                       Car Rental - Customer Invoice                  " << endl;
         cout << "\t\t	///////////////////////////////////////////////////////////" << endl;
         cout << "\t\t	| Invoice No. :"
-             << "----------------------|" << setw(10) << "#" << RandomString(10)
+             << "----------------------|" << setw(10) << "#" << code
              << " |" << endl;
         cout << "\t\t	| Customer Name:"
              << "---------------------|" << setw(10) << customername << " |" << endl;
@@ -796,10 +844,11 @@ validChoice:
 
         SignUp obj_3(name, id, pwd);
         rent obj2(id);
+    again:
         obj2.decide();
         obj2.calculate();
         obj2.showrent();
-        obj2.decide();
+        goto again;
 
         system("PAUSE");
         system("CLS");
@@ -810,10 +859,11 @@ validChoice:
         sleep(2);
         system("CLS");
         rent obj2(SignUp ::login());
+    again1:
         obj2.decide();
         obj2.calculate();
         obj2.showrent();
-        obj2.decide();
+        goto again1;
     }
     else if (choice == 3)
     {
@@ -825,9 +875,9 @@ validChoice:
         ifstream file;
         string st4;
         file.open("Book.txt");
-        cout << "----------------------------------------------------------------------------------------------------" << endl;
-        cout << "Customer Name  \t\t  Date \t\t\t  No. of cars \t\t Car Model\n " << endl;
-        cout << "----------------------------------------------------------------------------------------------------" << endl;
+        cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "Transaction_ID \t\t\t  Customer Name  \t\t Date \t\t\t  No. of cars \t\t Car Model\n " << endl;
+        cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
         while (file >> st4)
         {
 
@@ -837,17 +887,23 @@ validChoice:
             file >> st4;
             cout << st4 << "\t\t\t| ";
             file >> st4;
+            cout << st4 << "\t\t\t| ";
+            file >> st4;
             cout << st4 << endl;
         }
         file.close();
-        cout << "----------------------------------------------------------------------------------------" << endl;
+        cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
         cout << "Do you want to continue (Y/N) :";
         char ch;
         cin >> ch;
-        if (ch == 'Y' || 'y')
+        if (ch == 'Y' ||ch== 'y')
         {
             system("CLS");
             goto validChoice;
+        }
+        else if(ch=='N'||ch=='n')
+        {
+            exit(0);
         }
     }
     else if (choice == 4)
