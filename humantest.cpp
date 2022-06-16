@@ -16,6 +16,7 @@ int ctr = 0;
 
 const int ch_MAX = 36;
 
+// Function to generate random receipt id for every booking done.
 string RandomString(int ch)
 {
     char alpha[ch_MAX] = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
@@ -33,14 +34,15 @@ string RandomString(int ch)
     return result;
 }
 
+// Base Class for every other class.
 class customer
 {
 public:
+    // Public data members for the base class
     string customername;
     string carmodel;
     string carNo;
     int number_car;
-    char data;
 
     customer() {}
 
@@ -50,6 +52,7 @@ public:
     }
 };
 
+// Derived class from the base customer class
 class SignUp : public customer
 {
 public:
@@ -58,9 +61,9 @@ public:
     string password;
     int size;
 
-public:
     SignUp() {}
 
+    // Constructor function of the signup class to register the new user.
     SignUp(string str, string id, string pass) : customer(str)
     {
         username = str;
@@ -95,7 +98,7 @@ public:
         login();
     }
 
-public:
+    // Static function to create the admin file in case the data doesn't exist initially
     static void Admin()
     {
         string ss = "Human";
@@ -126,7 +129,7 @@ public:
         rename("tem.txt", "adminData.txt");
     }
 
-public:
+    // Static function of the class to give the functionality of admin login.
     static string Adminlogin()
     {
         system("CLS");
@@ -157,7 +160,7 @@ public:
         }
     }
 
-public:
+    // Static function of the class to give the function of user login.
     static string login()
     {
         system("CLS");
@@ -190,7 +193,7 @@ public:
         }
     }
 
-public:
+    // Static member function of the class to authenticate the user trying to login.
     static bool Authenticate(string id, string pass)
     {
 
@@ -205,7 +208,10 @@ public:
             in >> st3;
 
             if (id == st2 && pass == st3)
+            {
+                in.close();
                 return true;
+            }
         }
 
         in.close();
@@ -213,7 +219,7 @@ public:
         return false;
     }
 
-public:
+    // Static member function of the class authenticate the admin
     static bool AuthenticateAdmin(string id, string pass)
     {
         Admin();
@@ -228,11 +234,13 @@ public:
             in >> st3;
 
             if (id == st2 && pass == st3)
+            {
+                in.close();
                 return true;
+            }
         }
 
         in.close();
-
         return false;
     }
 };
@@ -250,6 +258,8 @@ public:
     {
         customername = st;
     }
+
+    // Functin to delete a booking from the database with the help of unique booking id
     void delBook()
     {
         int ctr = 0;
@@ -257,10 +267,13 @@ public:
         ofstream bout;
         string str;
         string s;
-        cout << "Enter code :";
+
+        cout << "Enter code :  ";
         cin >> s;
+        cout << endl;
         bin.open("book.txt");
         bout.open("b_temp.txt");
+
         while (bin >> str)
         {
             if (str == s)
@@ -274,21 +287,23 @@ public:
             {
                 bout << str << " ";
                 ++ctr;
+
                 if (ctr % 5 == 0)
-                {
                     bout << endl;
-                }
             }
         }
+
         bin.close();
         bout.close();
         char filename1[] = "book.txt";
         remove(filename1);
         rename("b_temp.txt", "book.txt");
-        // cout<<"after while";
-        // sleep(3);
+        sleep(2);
+        cout << "\nData has been deleted " << endl;
     }
 
+    // Member function of the class to decide what the current user want to do - Book a car,
+    // show current bookings, delete some exiting booking or exit the program.
     void decide()
     {
         int ch;
@@ -372,6 +387,7 @@ public:
         }
     }
 
+    // Member function to check whether the entered date is correct or not.
     bool correctDate(int bd, int bm, int by)
     {
         string st = __DATE__;
@@ -417,7 +433,7 @@ public:
 
         if (by >= cy)
             if (bm >= cm || (bm < cm && by > cy) && bm <= 12)
-                if ((bd > cd || (bd <= cd && (bm > cm || by > cy))) && (bd <= 30))
+                if ((bd > cd || (bd <= cd && (bm > cm || by > cy))) && (bd <= 30 && bd >= 1))
                     return true;
                 else
                     return false;
@@ -427,6 +443,7 @@ public:
             return false;
     }
 
+    // Member function to take the input data from the user in case the user want to book a car.
     void data()
     {
         cout << endl;
@@ -444,6 +461,7 @@ public:
             cout << endl;
             cout << "--------------------------------------------------------------------------" << endl;
 
+            // Display the available options under different categories of cars.
             if (carmodel == "A")
             {
 
@@ -511,8 +529,9 @@ public:
                 cin >> c;
                 if (c == 1)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Swift." << endl;
-                    ifstream inA("1.txt"); // displaying details of model A
+                    ifstream inA("1.txt");
                     char str[200];
                     while (inA)
                     {
@@ -523,8 +542,9 @@ public:
                 }
                 else if (c == 2)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Baleno." << endl;
-                    ifstream inA("A.txt"); // displaying details of model A
+                    ifstream inA("A.txt");
                     char str[200];
                     while (inA)
                     {
@@ -535,8 +555,9 @@ public:
                 }
                 else if (c == 3)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Wagon R." << endl;
-                    ifstream inA("A.txt"); // displaying details of model A
+                    ifstream inA("A.txt");
                     char str[200];
                     while (inA)
                     {
@@ -559,13 +580,13 @@ public:
                 system("CLS");
                 cout << "\t\t\t\tPress 1 for Honda Ciaz." << endl;
                 cout << "\t\t\t\tPress 2 for Honda City." << endl;
-                // cout<<"\t\t\t\tchoose 3 for Tesla model 2011."<<endl;
                 int c;
                 cin >> c;
                 if (c == 1)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Honda Ciaz" << endl;
-                    ifstream inA("1.txt"); // displaying details of model A
+                    ifstream inA("1.txt");
                     char str[200];
                     while (inA)
                     {
@@ -576,8 +597,9 @@ public:
                 }
                 else if (c == 2)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Honda City" << endl;
-                    ifstream inA("A.txt"); // displaying details of model A
+                    ifstream inA("A.txt");
                     char str[200];
                     while (inA)
                     {
@@ -599,13 +621,13 @@ public:
                 system("CLS");
                 cout << "\t\t\t\tPress 1 for Toyata Innova." << endl;
                 cout << "\t\t\t\tPress 2 for Ertiga." << endl;
-                // cout<<"\t\t\t\tchoose 3 for Tesla model 2011."<<endl;
                 int c;
                 cin >> c;
                 if (c == 1)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Toyata Innova." << endl;
-                    ifstream inA("1.txt"); // displaying details of model A
+                    ifstream inA("1.txt");
                     char str[200];
                     while (inA)
                     {
@@ -616,8 +638,9 @@ public:
                 }
                 else if (c == 2)
                 {
+                    // Displaying details of model A
                     cout << "You have chosen Ertiga." << endl;
-                    ifstream inA("A.txt"); // displaying details of model A
+                    ifstream inA("A.txt");
                     char str[200];
                     while (inA)
                     {
@@ -641,6 +664,7 @@ public:
 
         cout << "--------------------------------------------------------------------------" << endl;
         cout << "Please provide following information: " << endl;
+
         // getting data from user related to rental service
         cout << "Please select  No. of cars : ";
         cin >> number_car;
@@ -710,6 +734,7 @@ public:
         out.close();
     }
 
+    // Member of the class to calculate the rent for the booking specified
     void calculate()
     {
         sleep(1);
@@ -735,27 +760,27 @@ public:
              << "----------------------|" << setw(10) << "#" << code
              << " |" << endl;
         cout << "\t\t	| Customer Name:"
-             << "---------------------|" << setw(10) << customername << " |" << endl;
+             << "---------------------|" << setw(10) << customername << " \t  |" << endl;
         cout << "\t\t	| Car Model :"
-             << "------------------------|" << setw(10) << carmodel << " |" << endl;
+             << "------------------------|" << setw(10) << carmodel << " \t  |" << endl;
         cout << "\t\t	| No. of Cars :"
-             << "----------------------|" << setw(10) << number_car << " |" << endl;
+             << "----------------------|" << setw(10) << number_car << " \t  |" << endl;
         cout << "\t\t	| Number of days :"
-             << "-------------------|" << setw(10) << days << " |" << endl;
+             << "-------------------|" << setw(10) << days << " \t  |" << endl;
         cout << "\t\t	| PickUp Date :"
-             << "----------------------|" << setw(10) << date << " |" << endl;
+             << "----------------------|" << setw(10) << date << " \t  |" << endl;
         cout << "\t\t	| Your Rental Amount is :"
-             << "------------|" << setw(10) << rentalfee << " |" << endl;
+             << "------------|" << setw(10) << rentalfee << " \t  |" << endl;
         cout << "\t\t	| Caution Money :"
              << "--------------------|" << setw(10) << "0"
-             << " |" << endl;
+             << " \t  |" << endl;
         cout << "\t\t	| Advanced :"
              << "-------------------------|" << setw(10) << "0"
-             << " |" << endl;
+             << " \t  |" << endl;
         cout << "\t\t	 ________________________________________________________" << endl;
         cout << "\n";
         cout << "\t\t	| Total Rental Amount is :"
-             << "-------|" << setw(10) << rentalfee << " |" << endl;
+             << "-----------|" << setw(10) << rentalfee << " \t  |" << endl;
         cout << "\t\t	 ________________________________________________________" << endl;
         cout << "\t\t	 # This is a computer generated invoice and it does not" << endl;
         cout << "\t\t	 require an authorised signture #" << endl;
@@ -805,6 +830,7 @@ public:
 
 int main()
 {
+    // Entry point of the code
     welcome obj1;
     obj1.welcome1();
 
@@ -893,28 +919,27 @@ validChoice:
         }
         file.close();
         cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
-        cout << "-------------------------------------------------------------------------------------------------------------------------" <<endl;
+        cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
         cout << " Do you want to Delete Booking (Y/N) :";
-       
+
         char sh;
-        cin>>sh;
-        if(sh=='Y'||sh=='y')
+        cin >> sh;
+        if (sh == 'Y' || sh == 'y')
         {
             system("CLS");
             cout << "Use Transaction_ID of user ";
             obj4.delBook();
-            cout<<"\nData has been deleted "<<endl;
         }
-        
+
         cout << " Do you want to continue (Y/N) :";
         char ch;
         cin >> ch;
-        if (ch == 'Y' ||ch== 'y')
+        if (ch == 'Y' || ch == 'y')
         {
             system("CLS");
             goto validChoice;
         }
-        else if(ch=='N'||ch=='n')
+        else if (ch == 'N' || ch == 'n')
         {
             exit(0);
         }
